@@ -4,7 +4,7 @@ const clearEntry = document.querySelector("#clear");
 const display = document.querySelector("#display");
 const clear = document.querySelector("#clearall");
 const inputArea = document.querySelector("#input-buttons");
-const backspace = document.querySelector("backspace");
+const backspace = document.querySelector("#backspace");
 
 /* Global Varibale */
 let expression = {
@@ -15,7 +15,8 @@ let expression = {
 
 /* Event Listener */
 clearEntry.addEventListener("click", clearDisplay);
-clear.addEventListener("click", clearAll);
+clear.addEventListener("click", () => clearAll("content"));
+backspace.addEventListener("click", undoInput);
 inputArea.addEventListener("click", (e) => {
   mainCalculator(e);
 });
@@ -60,9 +61,18 @@ function mainCalculator(e) {
       }, 500);
     } else {
       const result = operate(expression.previousInput, expression.currentInput, expression.operator);
+      expression.previousInput = null;
       setDisplay(result);
-      clearAll("mem");
+      expression.currentInput = result;
     }
+  }
+}
+
+function undoInput() {
+  if (expression.currentInput.length > 0) {
+    const undoedInput = expression.currentInput.slice(0, -1);
+    expression.currentInput = undoedInput;
+    setDisplay(undoedInput);
   }
 }
 
@@ -79,7 +89,7 @@ function clearDisplay() {
   display.textContent = "0";
 }
 
-function clearAll(arg = "content") {
+function clearAll(arg) {
   expression.currentInput = "";
   expression.operator = null;
   expression.previousInput = null;
