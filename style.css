@@ -30,6 +30,34 @@ body {
 }
 
 #input-container {
+  display: flex;
   flex: auto;
   border: 1px solid black;
+}
+
+#operands {
+  display: flex;
+  width: 75%;
+  height: 80%;
+  flex-wrap: wrap;
+  border: 1px solid black;
+  align-self: flex-end;
+  gap: 5px;
+}
+
+button {
+  background-color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.operand {
+  flex: 1 1 30%;
+  height: auto;
+  font-weight: 900;
+  font-size: 2rem;
+}
+
+[id="0"] {
+  flex-basis: calc(60% + 10px);
 }
