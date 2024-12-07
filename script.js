@@ -24,7 +24,6 @@ function mainCalculator(e) {
   const userInput = getUserInput(e);
   if (userInput.class.contains("operand")) {
     if (expression.currentInput.length < 8) {
-
       //? Check if the input value had a dot or not, if not, add one. And never again.
 
       if (userInput.id === "dot" && !expression.currentInput.includes(".")) {
@@ -33,7 +32,6 @@ function mainCalculator(e) {
         expression.currentInput += userInput.id;
       }
       setDisplay(expression.currentInput);
-
     }
   } else if (userInput.class.contains("operator")) {
     //? To handle percentage operation.
@@ -49,7 +47,6 @@ function mainCalculator(e) {
     //? If not, set the operator and put currentInput to the previousInput.
 
     if (expression.previousInput && expression.operator) {
-
       const result = operate(expression.previousInput, expression.currentInput, expression.operator);
 
       //? Error operation handling
@@ -65,24 +62,19 @@ function mainCalculator(e) {
       expression.previousInput = null;
       expression.currentInput = result;
       setDisplay(expression.currentInput);
-
     }
 
     expression.operator = userInput.id;
     expression.previousInput = expression.currentInput;
     expression.currentInput = "";
-
   } else if (userInput.class.contains("calculate")) {
-
     if (!expression.previousInput && !expression.operator) {
       //? You cannot calculate without any number you inputted
       setDisplay("ERROR");
       setTimeout(() => {
         setDisplay(expression.currentInput || "0");
       }, 500);
-
     } else {
-
       const result = operate(expression.previousInput, expression.currentInput, expression.operator);
       // Error handling for operation
       if (result === "ERROR") {
@@ -97,7 +89,6 @@ function mainCalculator(e) {
       expression.previousInput = null;
       setDisplay(result);
       expression.currentInput = result;
-
     }
   }
 }
@@ -213,6 +204,14 @@ document.addEventListener("keydown", (e) => {
       }, 500);
     } else {
       const result = operate(expression.previousInput, expression.currentInput, expression.operator);
+      if (result === "ERROR") {
+        setDisplay("ERROR");
+        setTimeout(() => {
+          setDisplay("0");
+          clearAll("mem");
+          return;
+        }, 500);
+      }
       expression.previousInput = null;
       setDisplay(result);
       expression.currentInput = result;
