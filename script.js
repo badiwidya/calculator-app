@@ -1,6 +1,10 @@
+/* DOM Variable */
+
 const clear = document.querySelector("#clear");
 const display = document.querySelector("#display");
+const clearAll = document.querySelector("#clearall");
 
+/* Global Varibale */
 let expression = {
   currentInput: '',
   operator: null,
@@ -9,6 +13,7 @@ let expression = {
 
 /* Event Listener */
 clear.addEventListener("click", clearDisplay);
+clearAll.addEventListener("click", clearAll);
 
 /* Function */
 function clearDisplay() {
@@ -19,6 +24,7 @@ function clearAll(obj) {
   obj.currentInput = '';
   obj.operator = null;
   obj.previousInput = null;
+  clearDisplay();
 }
 
 function getUserInput(e) {
