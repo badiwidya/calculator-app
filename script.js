@@ -78,7 +78,7 @@ function mainCalculator(e) {
       //? You cannot calculate without any number you inputted
       setDisplay("ERROR");
       setTimeout(() => {
-        setDisplay("0");
+        setDisplay(expression.currentInput || "0");
       }, 500);
 
     } else {
@@ -97,7 +97,7 @@ function mainCalculator(e) {
       expression.previousInput = null;
       setDisplay(result);
       expression.currentInput = result;
-      
+
     }
   }
 }
