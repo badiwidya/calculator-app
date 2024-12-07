@@ -1,3 +1,3 @@
 # Calculator App
 
-_Work in progress_
+A working web calculator app.
