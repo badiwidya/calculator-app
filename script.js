@@ -36,6 +36,13 @@ function mainCalculator(e) {
 
     if (userInput.id === "percent") {
       const numPerAHundred = percent(expression.currentInput);
+      if (numPerAHundred === "ERROR") {
+        setDisplay("ERROR");
+        setTimeout(() => {
+          setDisplay("0");
+          return;
+        }, 500)
+      }
       expression.currentInput = numPerAHundred;
       setDisplay(expression.currentInput);
       return;
