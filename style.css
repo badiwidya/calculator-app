@@ -17,7 +17,7 @@ body {
   width: 23rem;
   height: 32rem;
   display: flex;
-  background-color: gray;
+  background-color: rgb(55, 0, 100);
   border: 1px solid black;
   flex-direction: column;
   padding: 10px;
@@ -42,7 +42,6 @@ body {
   display: flex;
   flex: auto;
   gap:5px;
-  border: 1px solid black;
   flex-direction: column;
 }
 
