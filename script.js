@@ -122,6 +122,9 @@ function operate(num1, num2, operation) {
       }
       return divide(a, b);
     case "modulus":
+      if (b === 0) {
+        return "ERROR";
+      }
       return modulus(a, b);
   }
 }
