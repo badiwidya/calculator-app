@@ -4,6 +4,7 @@ const clearEntry = document.querySelector("#clear");
 const display = document.querySelector("#display");
 const clear = document.querySelector("#clearall");
 const inputArea = document.querySelector("#input-buttons");
+const backspace = document.querySelector("backspace");
 
 /* Global Varibale */
 let expression = {
@@ -23,13 +24,23 @@ inputArea.addEventListener("click", (e) => {
 function mainCalculator(e) {
   const userInput = getUserInput(e);
   if (userInput.class.contains("operand")) {
+    
     if (expression.currentInput.length < 8) {
       expression.currentInput += userInput.id;
       setDisplay(expression.currentInput);
     }
   } else if (userInput.class.contains("operator")) {
 
-    //? So the function works like, if you have a number in memory, operate it first.
+    //? To handle percentage operation.
+
+    if (userInput.id === "percent") {
+      const numPerAHundred = percent(expression.currentInput);
+      expression.currentInput = numPerAHundred;
+      setDisplay(expression.currentInput);
+      return;
+    }
+
+    //? So it works like, if you have a number in memory, operate it first.
     //? If not, set the operator and put currentInput to the previousInput.
 
     if (expression.previousInput && expression.operator) {
@@ -42,13 +53,21 @@ function mainCalculator(e) {
     expression.previousInput = expression.currentInput;
     expression.currentInput = "";
   } else if (userInput.class.contains("calculate")) {
+    if (!expression.previousInput && !expression.operator) {
+      setDisplay("ERROR");
+      setTimeout(() => {
+        setDisplay("0");
+      }, 500);
+    } else {
+      const result = operate(expression.previousInput, expression.currentInput, expression.operator);
+      setDisplay(result);
+      clearAll("mem");
+    }
   }
 }
 
-function operatorProcess(operator, exp = expression) {}
-
 function setDisplay(exp) {
-  if (exp.length > 8) {
+  if (exp?.length > 8) {
     display.textContent = parseFloat(exp).toExponential(3);
     return;
   }
@@ -60,11 +79,13 @@ function clearDisplay() {
   display.textContent = "0";
 }
 
-function clearAll() {
+function clearAll(arg = "content") {
   expression.currentInput = "";
   expression.operator = null;
   expression.previousInput = null;
-  clearDisplay();
+  if (arg === "content") {
+    clearDisplay();
+  }
 }
 // use .contains(args)
 function getUserInput(e) {
@@ -86,6 +107,9 @@ function operate(num1, num2, operation) {
     case "multiply":
       return multiply(a, b);
     case "divide":
+      if (b === 0) {
+        return "ERROR";
+      }
       return divide(a, b);
     case "modulus":
       return modulus(a, b);
