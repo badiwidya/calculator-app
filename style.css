@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: lightgray;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+ }
+
+#calc-container {
+  width: 23rem;
+  height: 32rem;
+  display: flex;
+  background-color: gray;
+  border: 1px solid black;
+  flex-direction: column;
+  padding: 10px;
+  gap: 10px;
+}
+
+#input-display {
+  height: 96px;
+  width: 100%;
+  border: 1px solid black;
+}
+
+#input-container {
+  flex: auto;
+  border: 1px solid black;
+}
