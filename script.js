@@ -6,5 +6,5 @@ clear.addEventListener("click", clearDisplay);
 
 /* Function */
 function clearDisplay() {
-  display.textContent = "";
+  display.textContent = "0";
 }
