@@ -17,9 +17,7 @@ let expression = {
 clearEntry.addEventListener("click", clearDisplay);
 clear.addEventListener("click", () => clearAll("content"));
 backspace.addEventListener("click", undoInput);
-inputArea.addEventListener("click", (e) => {
-  mainCalculator(e);
-});
+inputArea.addEventListener("click", (e) => mainCalculator(e));
 
 /* Function */
 function mainCalculator(e) {
@@ -161,3 +159,26 @@ function percent(a) {
 function formatNumber(num) {
   return Number(num.toFixed(4)).toString();
 }
+
+/* Keyboard listener */
+
+document.addEventListener("keydown", (e) => {
+  if (!isNaN(e.key) && expression.currentInput.length < 8) {
+    expression.currentInput += e.key;
+    setDisplay(expression.currentInput);
+  } else if (e.key === "Backspace") {
+    undoInput();
+  } else if (e.key === "Enter") {
+    if (!expression.previousInput && !expression.operator) {
+      setDisplay("ERROR");
+      setTimeout(() => {
+        setDisplay("0");
+      }, 500);
+    } else {
+      const result = operate(expression.previousInput, expression.currentInput, expression.operator);
+      expression.previousInput = null;
+      setDisplay(result);
+      expression.currentInput = result;
+    }
+  }
+})
