@@ -28,10 +28,14 @@ body {
   height: 96px;
   width: 100%;
   font-weight: 900;
-  text-align: right;
   background-color: #121212;
   border: 1px solid black;
   color: white;
+  display: flex;
+  padding: 5px 10px;
+  font-size:3.5rem;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 #input-container {
@@ -60,6 +64,7 @@ button {
   border-radius: 10px;
   cursor: pointer;
   outline: none;
+  font-family: "Orbitron", monospace, sans-serif;
 }
 
 button:hover {
