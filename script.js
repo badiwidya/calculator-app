@@ -25,13 +25,15 @@ inputArea.addEventListener("click", (e) => {
 function mainCalculator(e) {
   const userInput = getUserInput(e);
   if (userInput.class.contains("operand")) {
-    
     if (expression.currentInput.length < 8) {
-      expression.currentInput += userInput.id;
+      if (userInput.id === "dot" && !expression.currentInput.includes(".")) {
+        expression.currentInput += ".";
+      } else if (userInput.id !== "dot") {
+        expression.currentInput += userInput.id;
+      }
       setDisplay(expression.currentInput);
     }
   } else if (userInput.class.contains("operator")) {
-
     //? To handle percentage operation.
 
     if (userInput.id === "percent") {
