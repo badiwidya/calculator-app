@@ -24,25 +24,22 @@ function mainCalculator(e) {
   const userInput = getUserInput(e);
   if (userInput.class.contains("operand")) {
     if (expression.currentInput.length < 8) {
+
+      //? Check if the input value had a dot or not, if not, add one. And never again.
+
       if (userInput.id === "dot" && !expression.currentInput.includes(".")) {
         expression.currentInput += ".";
       } else if (userInput.id !== "dot") {
         expression.currentInput += userInput.id;
       }
       setDisplay(expression.currentInput);
+
     }
   } else if (userInput.class.contains("operator")) {
     //? To handle percentage operation.
 
     if (userInput.id === "percent") {
       const numPerAHundred = percent(expression.currentInput);
-      if (numPerAHundred === "ERROR") {
-        setDisplay("ERROR");
-        setTimeout(() => {
-          setDisplay("0");
-          return;
-        }, 500)
-      }
       expression.currentInput = numPerAHundred;
       setDisplay(expression.currentInput);
       return;
@@ -52,25 +49,55 @@ function mainCalculator(e) {
     //? If not, set the operator and put currentInput to the previousInput.
 
     if (expression.previousInput && expression.operator) {
+
       const result = operate(expression.previousInput, expression.currentInput, expression.operator);
+
+      //? Error operation handling
+      if (result === "ERROR") {
+        setDisplay("ERROR");
+        setTimeout(() => {
+          setDisplay("0");
+          clearAll("mem");
+          return;
+        }, 500);
+      }
+
       expression.previousInput = null;
       expression.currentInput = result;
       setDisplay(expression.currentInput);
+
     }
+
     expression.operator = userInput.id;
     expression.previousInput = expression.currentInput;
     expression.currentInput = "";
+
   } else if (userInput.class.contains("calculate")) {
+
     if (!expression.previousInput && !expression.operator) {
+      //? You cannot calculate without any number you inputted
       setDisplay("ERROR");
       setTimeout(() => {
         setDisplay("0");
       }, 500);
+
     } else {
+
       const result = operate(expression.previousInput, expression.currentInput, expression.operator);
+      // Error handling for operation
+      if (result === "ERROR") {
+        setDisplay("ERROR");
+        setTimeout(() => {
+          setDisplay("0");
+          clearAll("mem");
+          return;
+        }, 500);
+      }
+
       expression.previousInput = null;
       setDisplay(result);
       expression.currentInput = result;
+      
     }
   }
 }
@@ -191,4 +218,4 @@ document.addEventListener("keydown", (e) => {
       expression.currentInput = result;
     }
   }
-})
+});
